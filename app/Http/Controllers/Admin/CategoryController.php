@@ -122,6 +122,7 @@ class CategoryController extends Controller
 
         $category->name = $request->name;
         $category->country_slug = $admin->country_slug;
+        $category->commission = $request->commission;
         $category->image = $request->has('image') ? Helpers::update('category/', $category->image, 'png', $request->file('image')) : $category->image;
         $category->save();
        

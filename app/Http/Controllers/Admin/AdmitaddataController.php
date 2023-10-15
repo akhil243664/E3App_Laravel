@@ -146,6 +146,8 @@ function index(Request $request)
     {
         $campain = Api_Advcampaign::find($id);
         $campain->cat_id = $request->category_id;
+        $campain->name = $request->name;
+        $campain->image = $request->has('image') ? Helpers::update('offer/', $campain->image, 'png', $request->file('image')) : $campain->image;
         $campain->save();
         return redirect()->back()->withSuccess('Campain Category updated successfully');
     }

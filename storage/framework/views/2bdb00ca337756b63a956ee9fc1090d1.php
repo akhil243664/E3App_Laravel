@@ -1,7 +1,6 @@
-@extends('admin.layout.app')
-@section('title', 'Admitad Campaign List')
+<?php $__env->startSection('title', 'Admitad Campaign List'); ?>
 
-@push('css_or_js')
+<?php $__env->startPush('css_or_js'); ?>
     <style>
         .flex.justify-between.flex-1.sm\:hidden {
             display: none;
@@ -33,8 +32,8 @@
             padding: 10px !important;
         }
     </style>
-@endpush
-@section('content')
+<?php $__env->stopPush(); ?>
+<?php $__env->startSection('content'); ?>
     <div class="page-body">
         <div class="container-xl">
             <div class="card">
@@ -45,7 +44,7 @@
                     </h2>
                     <div class="flex">
                         <form id="dataSearch">
-                            @csrf
+                            <?php echo csrf_field(); ?>
                             <!-- Search -->
                             <div class="d-flex fluid">
                                 <input type="search" name="search" class="form-control" placeholder="Search Campaigns"
@@ -56,7 +55,7 @@
                         </form>
                     </div>&nbsp;
                     <a align="right" style="float:right !important;"
-                        href="{{ route('admin.admitadcampaigns.export-all') }}" class="btn btn-danger  float-right">Export
+                        href="<?php echo e(route('admin.admitadcampaigns.export-all')); ?>" class="btn btn-danger  float-right">Export
                         All </a>&nbsp;
                 </div>
                 <div class="card-body">
@@ -76,64 +75,65 @@
                                 </tr>
                             </thead>
                             <tbody class="table-tbody">
-                                @foreach ($em as $k => $e)
+                                <?php $__currentLoopData = $em; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $k => $e): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                     <tr>
-                                        <td scope="row">{{ $k + $em->firstItem() }}</td>
-                                        <td class="sort-name"> {{ $e['name'] }}</td>
+                                        <td scope="row"><?php echo e($k + $em->firstItem()); ?></td>
+                                        <td class="sort-name"> <?php echo e($e['name']); ?></td>
                                         <td class="sort-name">
-                                            @if ($e['image'] != null)
-                                                <img src="{{ asset('storage/app/public/offer') }}/{{ $e['image'] }}"
+                                            <?php if($e['image'] != null): ?>
+                                                <img src="<?php echo e(asset('storage/app/public/offer')); ?>/<?php echo e($e['image']); ?>"
                                                     alt="no image" style="width:80px"><br><br>
-                                            @endif
+                                            <?php endif; ?>
                                             <button type="button" class="btn btn-danger" data-toggle="modal"
-                                                data-target="#exampleModal{{ $e->id }}">
+                                                data-target="#exampleModal<?php echo e($e->id); ?>">
                                                 Change Image</button>
                                         </td>
                                         <td class="sort-name">
-                                            @if ($e['description'] == null)
+                                            <?php if($e['description'] == null): ?>
                                                 <button type="button" class="btn btn-danger" data-toggle="modal"
-                                                    data-target="#exampl2eModal{{ $e->id }}">
+                                                    data-target="#exampl2eModal<?php echo e($e->id); ?>">
                                                     Add Description</button>
-                                            @else
-                                                <p>{{ Str::limit($e['description'], 60) }}</p>
-                                            @endif
+                                            <?php else: ?>
+                                                <p><?php echo e(Str::limit($e['description'], 60)); ?></p>
+                                            <?php endif; ?>
                                         </td>
                                         <td class="sort-name">
-                                            @if ($e['partner'] != null)
-                                                {{ Str::limit($e['partner']['name'], 30) }}
-                                            @else
+                                            <?php if($e['partner'] != null): ?>
+                                                <?php echo e(Str::limit($e['partner']['name'], 30)); ?>
+
+                                            <?php else: ?>
                                                 <span style="color:red">Partner Not Available</span>
-                                            @endif
+                                            <?php endif; ?>
                                         </td>
-                                        <td class="sort-name">{{ $e['category']['name'] }} </td>
+                                        <td class="sort-name"><?php echo e($e['category']['name']); ?> </td>
 
                                         <td style="">
                                             <label class="form-check form-check-single form-switch"
-                                                for="stocksCheckbox{{ $e->id }}">
+                                                for="stocksCheckbox<?php echo e($e->id); ?>">
                                                 <input type="checkbox" class="form-check-input"
-                                                    onclick="myFunction{{ $e->id + 1 }}()"
-                                                    id="stocksCheckbox{{ $e->id }}" {{ $e->status ? 'checked' : '' }}>
+                                                    onclick="myFunction<?php echo e($e->id + 1); ?>()"
+                                                    id="stocksCheckbox<?php echo e($e->id); ?>" <?php echo e($e->status ? 'checked' : ''); ?>>
                                             </label>
                                             <script>
-                                                function myFunction{{ $e->id + 1 }}() {
+                                                function myFunction<?php echo e($e->id + 1); ?>() {
                                                     if (window.confirm('Do you want to change the Status ?')) {
-                                                        window.location.href = "{{ route('admin.admitadcampaigns.status', [$e->id, $e->status ? 0 : 1]) }}"
+                                                        window.location.href = "<?php echo e(route('admin.admitadcampaigns.status', [$e->id, $e->status ? 0 : 1])); ?>"
                                                     }
                                                 }
                                             </script>
                                         </td>
                                         <?php $date = date_format($e['created_at'], 'd-M-Y'); ?>
-                                        <td class="sort-name"> {{ $date }}</td>
+                                        <td class="sort-name"> <?php echo e($date); ?></td>
                                         <td class="sort-type">
                                             <div class="dropdown">
                                                 <button class="btn btn-primary dropdown-toggle align-text-top"
                                                     data-bs-boundary="viewport" data-bs-toggle="dropdown">Actions</button>
                                                 <div class="dropdown-menu dropdown-menu-end">
                                                     <a class="dropdown-item"
-                                                        href="{{ route('admin.admitadcampaigns.edit', $e['id']) }}"
+                                                        href="<?php echo e(route('admin.admitadcampaigns.edit', $e['id'])); ?>"
                                                         title="Edit Campaign">Edit Categorie
                                                     </a>
-                                                    <a href="{{ route('admin.admitadcampaigns.delete', $e['id']) }}"
+                                                    <a href="<?php echo e(route('admin.admitadcampaigns.delete', $e['id'])); ?>"
                                                         class="dropdown-item" href="javascript:"
                                                         onclick="return confirm('Are you sure?');"
                                                         title="Delete Campaign">Delete
@@ -143,7 +143,7 @@
 
                                         </td>
                                     </tr>
-                                @endforeach
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 
                             </tbody>
                         </table>
@@ -151,7 +151,8 @@
                 </div>
                 <div class="card-footer" align="right">
                     <div class="pull-right mb-1" style="float: right;">
-                        {{ $em->render('pagination::bootstrap-4') }}
+                        <?php echo e($em->render('pagination::bootstrap-4')); ?>
+
                     </div>
 
 
@@ -160,16 +161,16 @@
         </div>
     </div>
 
-    @foreach ($em as $k => $e)
-        <div class="modal fade" id="exampleModal{{ $e->id }}" tabindex="-1" role="dialog"
-            aria-labelledby="exampleModalLabel{{ $e->id }}" aria-hidden="true">
+    <?php $__currentLoopData = $em; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $k => $e): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+        <div class="modal fade" id="exampleModal<?php echo e($e->id); ?>" tabindex="-1" role="dialog"
+            aria-labelledby="exampleModalLabel<?php echo e($e->id); ?>" aria-hidden="true">
             <div class="modal-dialog" role="document">
-                <form action="{{ route('admin.admitadcampaigns.update_cam_img', $e->id) }}" method="post"
+                <form action="<?php echo e(route('admin.admitadcampaigns.update_cam_img', $e->id)); ?>" method="post"
                     enctype="multipart/form-data">
-                    @csrf
+                    <?php echo csrf_field(); ?>
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel{{ $e->id }}" align="left">Add Banner
+                            <h5 class="modal-title" id="exampleModalLabel<?php echo e($e->id); ?>" align="left">Add Banner
                                 Image</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close"
                                 align="right">
@@ -180,7 +181,7 @@
                             <div class="form-group" id="viewerbox" style="display:none;margin-bottom:0%;">
                                 <center>
                                     <img style="width: 200px;border: 1px solid #3399db; border-radius: 10px; max-height:200px; padding: 11px;"
-                                        id="viewer" src="{{ asset('storage/app/public/offer') }}/{{ $e['image'] }}"
+                                        id="viewer" src="<?php echo e(asset('storage/app/public/offer')); ?>/<?php echo e($e['image']); ?>"
                                         alt="offer banner" />
                                 </center>
                             </div>
@@ -203,15 +204,15 @@
             </div>
         </div>
         <!-- Description -->
-        <div class="modal fade" id="exampl2eModal{{ $e->id }}" tabindex="-1" role="dialog"
-            aria-labelledby="exampleModalLabel{{ $e->id }}" aria-hidden="true">
+        <div class="modal fade" id="exampl2eModal<?php echo e($e->id); ?>" tabindex="-1" role="dialog"
+            aria-labelledby="exampleModalLabel<?php echo e($e->id); ?>" aria-hidden="true">
             <div class="modal-dialog" role="document">
-                <form action="{{ route('admin.admitadcampaigns.update_desc', $e->id) }}" method="post"
+                <form action="<?php echo e(route('admin.admitadcampaigns.update_desc', $e->id)); ?>" method="post"
                     enctype="multipart/form-data">
-                    @csrf
+                    <?php echo csrf_field(); ?>
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="example2ModalLabel{{ $e->id }}" align="left">Add
+                            <h5 class="modal-title" id="example2ModalLabel<?php echo e($e->id); ?>" align="left">Add
                                 Description</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close"
                                 align="right">
@@ -221,7 +222,7 @@
                         <div class="modal-body">
                             <div class="mb-3">
                                 <label class="form-label required">Description</label>
-                                <textarea class="form-control" name="description" id="summernote">{{ $e['description'] }}</textarea>
+                                <textarea class="form-control" name="description" id="summernote"><?php echo e($e['description']); ?></textarea>
                             </div>
 
                         </div>
@@ -233,12 +234,12 @@
                 </form>
             </div>
         </div>
-    @endforeach
+    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 
-@endsection
+<?php $__env->stopSection(); ?>
 
 
-@push('script_2')
+<?php $__env->startPush('script_2'); ?>
     <script>
         function getStoreData(route, store_id, id) {
             $.get({
@@ -295,7 +296,7 @@
                     }
                 });
                 $.post({
-                    url: '{{ route('admin.category.search') }}',
+                    url: '<?php echo e(route('admin.category.search')); ?>',
                     data: formData,
                     cache: false,
                     contentType: false,
@@ -340,7 +341,7 @@
                     }
                 });
                 $.post({
-                    url: '{{ route('admin.category.search') }}',
+                    url: '<?php echo e(route('admin.category.search')); ?>',
                     data: formData,
                     cache: false,
                     contentType: false,
@@ -388,6 +389,8 @@
     </script>
 
     <!-- jQuery UI 1.11.4 -->
-    <script src="{{ asset('public/theme_assets/plugins/jquery/jquery.min.js') }}"></script>
-    <script src="{{ asset('public/theme_assets/plugins/jquery-ui/jquery-ui.min.js') }}"></script>
-@endpush
+    <script src="<?php echo e(asset('public/theme_assets/plugins/jquery/jquery.min.js')); ?>"></script>
+    <script src="<?php echo e(asset('public/theme_assets/plugins/jquery-ui/jquery-ui.min.js')); ?>"></script>
+<?php $__env->stopPush(); ?>
+
+<?php echo $__env->make('admin.layout.app', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\E3App_Laravel\resources\views/admin/admitad/campaigns/list.blade.php ENDPATH**/ ?>

@@ -1,9 +1,9 @@
-@extends('admin.layout.app')
-@section('title', 'Edit Category')
 
-@push('css_or_js')
-@endpush
-@section('content')
+<?php $__env->startSection('title', 'Edit Category'); ?>
+
+<?php $__env->startPush('css_or_js'); ?>
+<?php $__env->stopPush(); ?>
+<?php $__env->startSection('content'); ?>
 
     <div class="page-body">
         <div class="container-xl">
@@ -14,21 +14,21 @@
                     </h2>
                 </div>
                 <div class="card-body">
-                    <form action="{{ route('admin.category.update', [$category['id']]) }}" method="post"
+                    <form action="<?php echo e(route('admin.category.update', [$category['id']])); ?>" method="post"
                         enctype="multipart/form-data">
-                        @csrf
+                        <?php echo csrf_field(); ?>
                         <div class="mb-3">
                             <label class="form-label required">Category Name</label>
                             <input type="text" class="form-control" name="name" id="name"
-                                value="{{ $category['name'] }}" />
+                                value="<?php echo e($category['name']); ?>" />
                         </div>
                         <div class="form-group" id="viewerbox" style="margin-bottom:0%;">
                             <center>
                                 <img style="width: 200px;border: 1px solid #3399db; border-radius: 10px; padding: 11px;"
                                     id="viewer"
-                                    @if (isset($category)) src="{{ asset('storage/app/public/category') }}/{{ $category['image'] }}"
-                                        @else
-                                        src="{{ asset('assets/theme_assets/img') }}/upload1.png" @endif
+                                    <?php if(isset($category)): ?> src="<?php echo e(asset('storage/app/public/category')); ?>/<?php echo e($category['image']); ?>"
+                                        <?php else: ?>
+                                        src="<?php echo e(asset('assets/theme_assets/img')); ?>/upload1.png" <?php endif; ?>
                                     alt="image" />
                             </center>
                         </div>
@@ -40,7 +40,7 @@
                         <div class="mb-3">
                             <label class="form-label required">User Commission (in %)</label>
                             <input type="text" class="form-control" name="commission" id="commission"
-                                value="{{ $category['commission'] }}" />
+                                value="<?php echo e($category['commission']); ?>" />
                         </div>
                         <div class="card-footer">
                             <button type="submit" class="btn btn-primary">Submit</button>
@@ -53,10 +53,10 @@
     </div>
 
 
-@endsection
+<?php $__env->stopSection(); ?>
 
 
-@push('script_2')
+<?php $__env->startPush('script_2'); ?>
     <script>
         $(document).on('ready', function() {
             // INITIALIZATION OF DATATABLES
@@ -72,7 +72,7 @@
                     }
                 });
                 $.post({
-                    url: '{{ route('admin.category.search') }}',
+                    url: '<?php echo e(route('admin.category.search')); ?>',
                     data: formData,
                     cache: false,
                     contentType: false,
@@ -120,6 +120,8 @@
     </script>
 
     <!-- jQuery UI 1.11.4 -->
-    <script src="{{ asset('public/theme_assets/plugins/jquery/jquery.min.js') }}"></script>
-    <script src="{{ asset('public/theme_assets/plugins/jquery-ui/jquery-ui.min.js') }}"></script>
-@endpush
+    <script src="<?php echo e(asset('public/theme_assets/plugins/jquery/jquery.min.js')); ?>"></script>
+    <script src="<?php echo e(asset('public/theme_assets/plugins/jquery-ui/jquery-ui.min.js')); ?>"></script>
+<?php $__env->stopPush(); ?>
+
+<?php echo $__env->make('admin.layout.app', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\E3App_Laravel\resources\views/admin/category/edit.blade.php ENDPATH**/ ?>

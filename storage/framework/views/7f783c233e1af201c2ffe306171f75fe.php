@@ -1,7 +1,7 @@
-@extends('admin.layout.app')
-@section('title', 'Admitad Advertiser List')
 
-@push('css_or_js')
+<?php $__env->startSection('title', 'Admitad Advertiser List'); ?>
+
+<?php $__env->startPush('css_or_js'); ?>
     <style>
         .flex.justify-between.flex-1.sm\:hidden {
             display: none;
@@ -30,8 +30,8 @@
             padding: 10px !important;
         }
     </style>
-@endpush
-@section('content')
+<?php $__env->stopPush(); ?>
+<?php $__env->startSection('content'); ?>
 
     <div class="page-body">
         <div class="container-xl">
@@ -43,7 +43,7 @@
                     </h2>
                     <div class="flex">
                         <form id="dataSearch">
-                            @csrf
+                            <?php echo csrf_field(); ?>
                             <!-- Search -->
                             <div class="d-flex fluid">
                                 <input type="search" name="search" class="form-control" placeholder="search advertisers"
@@ -53,7 +53,7 @@
                             <!-- End Search -->
                         </form>
                     </div>&nbsp; <a align="right" style="float:right !important;"
-                        href="{{ route('admin.admitadadvertisers.export-all-advertiser') }}"
+                        href="<?php echo e(route('admin.admitadadvertisers.export-all-advertiser')); ?>"
                         class="btn btn-danger  float-right">Export All </a>&nbsp;
                 </div>
 
@@ -77,60 +77,60 @@
                             </thead>
                             <tbody class="table-tbody" id="table-div">
 
-                                @foreach ($partners as $key => $partner)
+                                <?php $__currentLoopData = $partners; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $partner): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                     <tr>
-                                        <td id="row">{{ $key + $partners->firstItem() }}</td>
+                                        <td id="row"><?php echo e($key + $partners->firstItem()); ?></td>
                                         <td>
 
-                                            <img src="{{ asset('storage/app/public/partner') }}/{{ $partner['image'] }}"
+                                            <img src="<?php echo e(asset('storage/app/public/partner')); ?>/<?php echo e($partner['image']); ?>"
                                                 alt="no image" style="width:80px">
 
                                         </td>
-                                        <td class="sort-id">{{ $partner->id }}</td>
-                                        <td class="sort-id">{{ $partner->affiliate_partner }}</td>
-                                        <td class="sort-name"> {{ Str::limit($partner['name'], 20, '...') }}</td>
+                                        <td class="sort-id"><?php echo e($partner->id); ?></td>
+                                        <td class="sort-id"><?php echo e($partner->affiliate_partner); ?></td>
+                                        <td class="sort-name"> <?php echo e(Str::limit($partner['name'], 20, '...')); ?></td>
                                         <td class="sort-name">
-                                            @if ($partner['tagline'] != null)
+                                            <?php if($partner['tagline'] != null): ?>
                                                 <b>Tagline : </b>
-                                                <p>{{ $partner->tagline }}</p>
-                                            @endif
+                                                <p><?php echo e($partner->tagline); ?></p>
+                                            <?php endif; ?>
                                             <button type="button" class="btn btn-danger" data-toggle="modal"
-                                                data-target="#examplseModal{{ $partner->id }}">
+                                                data-target="#examplseModal<?php echo e($partner->id); ?>">
                                                 Add/Update Tagline</button>
                                         </td>
                                         <td class="sort-name">
-                                            @php($name = \App\Models\BusinessSetting::where('key', 'default_commision')->first()->value)
+                                            <?php ($name = \App\Models\BusinessSetting::where('key', 'default_commision')->first()->value); ?>
                                             <b>commission Percentage : </b>
-                                            @if ($partner['comission_percentage'] == null)
-                                                {{ $name }} %
-                                            @else
-                                                {{ $partner['comission_percentage'] }} %
-                                            @endif <br>
+                                            <?php if($partner['comission_percentage'] == null): ?>
+                                                <?php echo e($name); ?> %
+                                            <?php else: ?>
+                                                <?php echo e($partner['comission_percentage']); ?> %
+                                            <?php endif; ?> <br>
                                             <b>commission Type : </b>
-                                            @if ($partner['comission_type'] == 1)
+                                            <?php if($partner['comission_type'] == 1): ?>
                                                 Cashback
-                                            @else
+                                            <?php else: ?>
                                                 Rewards
-                                            @endif
+                                            <?php endif; ?>
                                             <br>
                                             <button type="button" class="btn btn-danger" data-toggle="modal"
-                                                data-target="#examplseModal1{{ $partner->id }}">Commission
+                                                data-target="#examplseModal1<?php echo e($partner->id); ?>">Commission
                                                 Settings</button>
                                         </td>
                                         <td class="sort-role">
                                             <center> <label class="form-check form-check-single form-switch"
-                                                    for="stocksCheckbox{{ $partner->id }}">
+                                                    for="stocksCheckbox<?php echo e($partner->id); ?>">
                                                     <input type="checkbox" class="form-check-input"
-                                                        onclick="myFunction{{ $partner->id }}()"
-                                                        id="stocksCheckbox{{ $partner->id }}"
-                                                        {{ $partner->top_cashback ? 'checked' : '' }}>
+                                                        onclick="myFunction<?php echo e($partner->id); ?>()"
+                                                        id="stocksCheckbox<?php echo e($partner->id); ?>"
+                                                        <?php echo e($partner->top_cashback ? 'checked' : ''); ?>>
                                                 </label>
                                             </center>
                                             <script>
-                                                function myFunction{{ $partner->id }}() {
+                                                function myFunction<?php echo e($partner->id); ?>() {
                                                     if (window.confirm('Do you want to change the top cashback status?')) {
                                                         window.location.href =
-                                                            "{{ route('admin.advertiser.top_cashback', [$partner->id, $partner->top_cashback ? 0 : 1]) }}"
+                                                            "<?php echo e(route('admin.advertiser.top_cashback', [$partner->id, $partner->top_cashback ? 0 : 1])); ?>"
                                                     }
                                                 }
                                             </script>
@@ -138,36 +138,36 @@
                                         </td>
                                         <td class="sort-role">
                                             <center> <label class="form-check form-check-single form-switch"
-                                                    for="stocksCheckboxactive{{ $partner->id }}">
+                                                    for="stocksCheckboxactive<?php echo e($partner->id); ?>">
                                                     <input type="checkbox" class="form-check-input"
-                                                        onclick="myFunction2{{ $partner->id }}()"
-                                                        id="stocksCheckboxactive{{ $partner->id }}"
-                                                        {{ $partner->status ? 'checked' : '' }}>
+                                                        onclick="myFunction2<?php echo e($partner->id); ?>()"
+                                                        id="stocksCheckboxactive<?php echo e($partner->id); ?>"
+                                                        <?php echo e($partner->status ? 'checked' : ''); ?>>
                                                 </label>
                                             </center>
                                             <script>
-                                                function myFunction2{{ $partner->id }}() {
+                                                function myFunction2<?php echo e($partner->id); ?>() {
                                                     if (window.confirm(
                                                             'Do you want to change the active status? status of all campaigns/ads/offers of this advertiser will be updated accordingly?'
                                                             )) {
-                                                        window.location.href = "{{ route('admin.advertiser.active_status', [$partner->id, $partner->status ? 0 : 1]) }}"
+                                                        window.location.href = "<?php echo e(route('admin.advertiser.active_status', [$partner->id, $partner->status ? 0 : 1])); ?>"
                                                     }
                                                 }
                                             </script>
 
                                         </td>
                                         <?php $date = date_format($partner['created_at'], 'd-M-Y'); ?>
-                                        <td class="sort-name"> {{ $date }}</td>
+                                        <td class="sort-name"> <?php echo e($date); ?></td>
                                         <td class="sort-type">
                                             <div class="dropdown">
                                                 <button class="btn btn-primary dropdown-toggle align-text-top"
                                                     data-bs-boundary="viewport" data-bs-toggle="dropdown">Actions</button>
                                                 <div class="dropdown-menu dropdown-menu-end">
                                                     <a class="dropdown-item"
-                                                        href="{{ route('admin.advertiser.edit', [$partner['id']]) }}"
+                                                        href="<?php echo e(route('admin.advertiser.edit', [$partner['id']])); ?>"
                                                         title="edit partner">Edit
                                                     </a>
-                                                    <a href="{{ route('admin.advertiser.delete', [$partner['id']]) }}"
+                                                    <a href="<?php echo e(route('admin.advertiser.delete', [$partner['id']])); ?>"
                                                         class="dropdown-item" href="javascript:"
                                                         onclick="return confirm('Are you sure?');"
                                                         title="delete partner">Delete
@@ -176,7 +176,7 @@
                                             </div>
                                         </td>
                                     </tr>
-                                @endforeach
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 
                             </tbody>
                         </table>
@@ -184,22 +184,23 @@
                 </div>
                 <div class="card-footer page-area" align="right">
                     <div class="pull-right mb-1" style="float: right;">
-                        {{ $partners->render('pagination::bootstrap-4') }}
+                        <?php echo e($partners->render('pagination::bootstrap-4')); ?>
+
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    @foreach ($partners as $key => $partner)
-        <div class="modal fade" id="examplseModal{{ $partner->id }}" tabindex="-1" role="dialog"
-            aria-labelledby="exampleModalLabel{{ $partner->id }}" aria-hidden="true">
+    <?php $__currentLoopData = $partners; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $partner): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+        <div class="modal fade" id="examplseModal<?php echo e($partner->id); ?>" tabindex="-1" role="dialog"
+            aria-labelledby="exampleModalLabel<?php echo e($partner->id); ?>" aria-hidden="true">
             <div class="modal-dialog" role="document">
-                <form action="{{ route('admin.advertiser.update_tagline', $partner->id) }}" method="post"
+                <form action="<?php echo e(route('admin.advertiser.update_tagline', $partner->id)); ?>" method="post"
                     enctype="multipart/form-data">
-                    @csrf
+                    <?php echo csrf_field(); ?>
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="example2ModalLabel{{ $partner->id }}" align="left">Add
+                            <h5 class="modal-title" id="example2ModalLabel<?php echo e($partner->id); ?>" align="left">Add
                                 Tagline</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
@@ -209,7 +210,7 @@
                             <div class="mb-3">
                                 <label class="form-label required">Tagline</label>
                                 <input type="text" name="tagline" class="form-control"
-                                    value="{{ $partner->tagline }}">
+                                    value="<?php echo e($partner->tagline); ?>">
                             </div>
 
                         </div>
@@ -226,15 +227,15 @@
 
 
         <!--comission model-->
-        <div class="modal fade" id="examplseModal1{{ $partner->id }}" tabindex="-1" role="dialog"
-            aria-labelledby="exampleModalLabel1{{ $partner->id }}" aria-hidden="true">
+        <div class="modal fade" id="examplseModal1<?php echo e($partner->id); ?>" tabindex="-1" role="dialog"
+            aria-labelledby="exampleModalLabel1<?php echo e($partner->id); ?>" aria-hidden="true">
             <div class="modal-dialog" role="document">
-                <form action="{{ route('admin.advertiser.update_comission', $partner->id) }}" method="post"
+                <form action="<?php echo e(route('admin.advertiser.update_comission', $partner->id)); ?>" method="post"
                     enctype="multipart/form-data">
-                    @csrf
+                    <?php echo csrf_field(); ?>
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="example2ModalLabel1{{ $partner->id }}" align="left">
+                            <h5 class="modal-title" id="example2ModalLabel1<?php echo e($partner->id); ?>" align="left">
                                 Commission Settings</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
@@ -244,16 +245,16 @@
                             <div class="mb-3">
                                 <label class="form-label required">Commission Type</label>
                                 <select name="com_type" class="form-control" required>
-                                    <option value="1" @if ($partner->comission_type == 1) selected @endif>Cashback
+                                    <option value="1" <?php if($partner->comission_type == 1): ?> selected <?php endif; ?>>Cashback
                                     </option>
-                                    <option value="0" @if ($partner->comission_type == 0) selected @endif>Rewards
+                                    <option value="0" <?php if($partner->comission_type == 0): ?> selected <?php endif; ?>>Rewards
                                     </option>
                                 </select>
                             </div>
                             <div class="mb-3">
                                 <label class="form-label required">% of user</label>
                                 <input type="number" name="com_per" step="0.1" class="form-control"
-                                    value="{{ $partner->comission_percentage }}" required>
+                                    value="<?php echo e($partner->comission_percentage); ?>" required>
                             </div>
 
                         </div>
@@ -265,13 +266,13 @@
                 </form>
             </div>
         </div>
-    @endforeach
+    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 
 
-@endsection
+<?php $__env->stopSection(); ?>
 
 
-@push('script_2')
+<?php $__env->startPush('script_2'); ?>
     <script>
         function readURL(input) {
             if (input.files && input.files[0]) {
@@ -290,4 +291,6 @@
             readURL(this);
         });
     </script>
-@endpush
+<?php $__env->stopPush(); ?>
+
+<?php echo $__env->make('admin.layout.app', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\E3App_Laravel\resources\views/admin/admitad/partner/index.blade.php ENDPATH**/ ?>
