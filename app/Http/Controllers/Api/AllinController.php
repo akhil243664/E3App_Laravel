@@ -33,7 +33,7 @@ class AllinController extends Controller
 		$offset=1;
 		$check=NULL;
 		$countriedds=Country::first();
-       $country_slug= $request->header('countryslug');
+       $country_slug= $request->header('countryslug') ?? 'in';;
 		$countcheck=Country::where('slug',$country_slug)->first();
 		$impact= DB::table('impact')->where('country_slug',$country_slug)->first();
 		$this->sid =  $impact->sid;
@@ -206,7 +206,7 @@ class AllinController extends Controller
     {
 		$offset=1;
 		$countriedds=Country::first();
-       $country_slug= $request->header('countryslug');
+       $country_slug= $request->header('countryslug') ?? 'in';;
 		$countcheck=Country::where('slug',$country_slug)->first();
 		if(!$countcheck){
 			$arr = array('status'=>1, 'data'=>[]);
@@ -222,7 +222,7 @@ class AllinController extends Controller
 
     	$offset=1;
     	  $countriedds=Country::first();
-      $country_slug= $request->header('countryslug');
+      $country_slug= $request->header('countryslug') ?? 'in';;
 		$countcheck=Country::where('slug',$country_slug)->first();
 		if(!$countcheck){
 			$arr = array('status'=>1, 'data'=>[]);
@@ -351,7 +351,7 @@ class AllinController extends Controller
     {
 		$offset=1;
 		 $countriedds=Country::first();
-       $country_slug= $request->header('countryslug');
+       $country_slug= $request->header('countryslug') ?? 'in';;
 		$countcheck=Country::where('slug',$country_slug)->first();
 		if(!$countcheck){
 			$arr = array('status'=>1, 'data'=>[]);

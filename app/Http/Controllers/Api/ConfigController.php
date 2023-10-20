@@ -25,7 +25,9 @@ class ConfigController extends Controller
     public function configuration(Request $request)
     {
 		$countriedds=Country::first();
-        $country_slug= $request->header('countryslug')??$countriedds->slug;
+        // $country_slug= $request->header('countryslug')??$countriedds->slug;
+        $country_slug = $request->header('countryslug') ?? 'in';
+        
 	
 		$cc= Country::where('slug', $country_slug)->first();
 		if($cc){
@@ -39,6 +41,7 @@ class ConfigController extends Controller
 		}
 		$countrysel=CountrySelection::first();
 		$chck=BusinessSetting::where(['key' => 'currency'])->where('country_slug', $country_slug)->first()->value;
+        
 		$curren=Currency::where('currency_code',$chck)->first();
 		$langg=DefaultLanguage::select('languageName','languageCode')->where('selected',1)->get();
 		$country=Country::where('status',1)->get();
@@ -82,7 +85,9 @@ class ConfigController extends Controller
    public function update_profile(Request $request)
     { 
 	   $countriedds=Country::first();
-        $country_slug= $request->header('countryslug')??$countriedds->slug;
+        $country_slug= $request->header('countryslug')??'in';
+        // $country_slug= $request->header('countryslug')??$countriedds->slug;
+
 	   
         $validator = Validator::make($request->all(), [
 			'user_id'=>'required',

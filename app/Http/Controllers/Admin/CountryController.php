@@ -259,9 +259,12 @@ $currency=Currency::where('currency_code',$request->currency)->first();
 		
 		$currency= DB::table('business_settings')->where('key','currency')->where('country_slug',$country->slug)->first();
 		
-         $admitad= DB::table('admitad')->where('country_slug',$country->slug)->first();
+        $admitad= DB::table('admitad')->where('country_slug',$country->slug)->first();
         $cuelink= DB::table('cuelink')->where('country_slug',$country->slug)->first();
         $impact= DB::table('impact')->where('country_slug',$country->slug)->first();
+        
+        // dd($country,$impact,$cuelink,$admitad,$currency);
+        
         return view('admin.country.edit', compact('country','admitad','cuelink','impact','currency'));
     }
 
@@ -281,12 +284,16 @@ $currency=Currency::where('currency_code',$request->currency)->first();
     public function update(Request $request,$id){
 
         $request->validate([
-            'country'=>'required',
+            'country' => 'required',
             'currency' => 'required|max:100',
+            'slug' => 'required|regex:/^[a-z]{1,50}$/',
         ], [
-            'country.required' => 'select country',
+            'country.required' => 'Select a country',
             'currency.required' => 'Currency is required!',
+            'slug.required' => 'Select a slug',
+            'slug.regex' => 'The slug must consist of up to 50 lowercase letters only.',
         ]);
+
       $currency=Currency::where('currency_code',$request->currency)->first();
         $counttry=DefaultCountry::where('id',$request->country)->first();
         $admitad= DB::table('admitad')->where('country_slug',$counttry->slug)->first();
@@ -298,6 +305,7 @@ $currency=Currency::where('currency_code',$request->currency)->first();
         $country = Country::find($id);
         $country->country_name       = ucwords($counttry->country_name);
         $country->country_code       = $counttry->country_code;
+        $country->slug       = $request->slug;
         $country->currency_code       = $currency->currency_code;
         $country->phone_code       = $counttry->phone_code;
         $country->currency_symbol    = $currency->currency_symbol;

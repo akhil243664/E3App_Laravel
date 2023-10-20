@@ -131,7 +131,7 @@
                                                 <div class="dropdown-menu dropdown-menu-end">
                                                     <a class="dropdown-item"
                                                         href="{{ route('admin.admitadcampaigns.edit', $e['id']) }}"
-                                                        title="Edit Campaign">Edit Categorie
+                                                        title="Edit Campaign">Edit
                                                     </a>
                                                     <a href="{{ route('admin.admitadcampaigns.delete', $e['id']) }}"
                                                         class="dropdown-item" href="javascript:"

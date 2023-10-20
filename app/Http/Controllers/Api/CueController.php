@@ -29,7 +29,7 @@ class CueController extends Controller
     {
         $offset=1;
        $countriedds=Country::first();
-        $country_slug= $request->header('countryslug');
+        $country_slug= $request->header('countryslug') ?? 'in';;
 		$countcheck=Country::where('slug',$country_slug)->first();
 		if(!$countcheck){
 			$arr = array('status'=>1, 'data'=>[]);
@@ -61,7 +61,7 @@ class CueController extends Controller
     {
         $offset=1;
          $countriedds=Country::first();
-        $country_slug= $request->header('countryslug');
+        $country_slug= $request->header('countryslug') ?? 'in';;
 		$countcheck=Country::where('slug',$country_slug)->first();
 		if(!$countcheck){
 			$arr = array('status'=>1, 'data'=>[]);
@@ -98,7 +98,7 @@ class CueController extends Controller
     {
         $offset = 1;
 		$countriedds = Country::first();
-		$country_slug = $request->header('countryslug');
+		$country_slug = $request->header('countryslug') ?? 'in';;
 		$countcheck = Country::where('slug', $country_slug)->first();
 
 		if (!$countcheck) {
@@ -162,7 +162,7 @@ class CueController extends Controller
     {
         $offset=1;
         $countriedds=Country::first();
-       $country_slug= $request->header('countryslug');
+       $country_slug= $request->header('countryslug') ?? 'in';;
 		$countcheck=Country::where('slug',$country_slug)->first();
 		if(!$countcheck){
 			$arr = array('status'=>1, 'data'=>[]);
@@ -177,7 +177,7 @@ class CueController extends Controller
     {
         $offset=1;
           $countriedds=Country::first();
-       $country_slug= $request->header('countryslug');
+       $country_slug= $request->header('countryslug') ?? 'in';;
 		$countcheck=Country::where('slug',$country_slug)->first();
 		if(!$countcheck){
 			$arr = array('status'=>1, 'data'=>[]);
@@ -205,7 +205,7 @@ class CueController extends Controller
     {
 		$offset=1;
 		  $countriedds=Country::first();
-     $country_slug= $request->header('countryslug');
+     $country_slug= $request->header('countryslug') ?? 'in';;
 		$countcheck=Country::where('slug',$country_slug)->first();
 		if(!$countcheck){
 			$arr = array('status'=>1, 'data'=>[]);
@@ -331,7 +331,7 @@ class CueController extends Controller
         public function topcashback(Request $request)
     {
     	 $countriedds=Country::first();
-      $country_slug= $request->header('countryslug');
+      $country_slug= $request->header('countryslug') ?? 'in';;
 		$countcheck=Country::where('slug',$country_slug)->first();
 		if(!$countcheck){
 			$arr = array('status'=>1, 'data'=>[]);
@@ -459,7 +459,7 @@ class CueController extends Controller
     {
 			
 	 $countriedds=Country::first();
-       $country_slug= $request->header('countryslug');
+       $country_slug= $request->header('countryslug') ?? 'in';;
 		$countcheck=Country::where('slug',$country_slug)->first();
 		if(!$countcheck){
 			$arr = array('status'=>1, 'data'=>[]);
@@ -586,7 +586,8 @@ class CueController extends Controller
     public function getallbanners(Request $request)
     {
        $countriedds=Country::first();
-       $country_slug= $request->header('countryslug');
+    //   $country_slug= $request->header('countryslug') ?? 'in';;
+        $country_slug= $request->header('countryslug') ?? 'in';
 		$countcheck=Country::where('slug',$country_slug)->first();
 		if(!$countcheck){
 			$arr = array('status'=>1, 'data'=>[]);
@@ -624,7 +625,7 @@ class CueController extends Controller
     public function offer_details(Request $request)
     {
     	 $countriedds=Country::first();
-      $country_slug= $request->header('countryslug');
+      $country_slug= $request->header('countryslug') ?? 'in';;
 		$countcheck=Country::where('slug',$country_slug)->first();
 		if(!$countcheck){
 			$arr = array('status'=>1, 'data'=>NULL);
@@ -646,7 +647,7 @@ class CueController extends Controller
     public function ads_details(Request $request)
     {
     	  $countriedds=Country::first();
-       $country_slug= $request->header('countryslug');
+       $country_slug= $request->header('countryslug') ?? 'in';;
 		$countcheck=Country::where('slug',$country_slug)->first();
 		if(!$countcheck){
 			$arr = array('status'=>1, 'data'=>NULL);
@@ -665,7 +666,8 @@ class CueController extends Controller
     public function campaigns_details(Request $request)
     {
     	  $countriedds=Country::first();
-        $country_slug= $request->header('countryslug')??$countriedds->slug;
+		//   $country_slug= $request->header('countryslug') ?? $countriedds->slug;
+        $country_slug= $request->header('countryslug') ?? 'in';
         $offset=1;
         $partners=CuelinkCampaign::with('partner')->where('country_slug',$country_slug)->where('id',$request->campaign_id)->first();
         $partners->coupon=Coupon::where('adv_id',$partners->adv_id)->where('country_slug',$country_slug)->get();
@@ -675,7 +677,7 @@ class CueController extends Controller
     public function seemorecampaigns(Request $request)
     {
     	  $countriedds=Country::first();
-        $country_slug= $request->header('countryslug');
+        $country_slug= $request->header('countryslug') ?? 'in';;
 		$countcheck=Country::where('slug',$country_slug)->first();
 		if(!$countcheck){
 			$arr = array('status'=>1, 'data'=>[]);
@@ -703,7 +705,7 @@ class CueController extends Controller
   public function seemoreoffers(Request $request)
     {
     	  $countriedds=Country::first();
-        $country_slug= $request->header('countryslug');
+        $country_slug= $request->header('countryslug') ?? 'in';;
 		$countcheck=Country::where('slug',$country_slug)->first();
 		if(!$countcheck){
 			$arr = array('status'=>1, 'data'=>[]);
@@ -736,7 +738,7 @@ class CueController extends Controller
     public function seemorads(Request $request)
     {
     	  $countriedds=Country::first();
-        $country_slug= $request->header('countryslug');
+        $country_slug= $request->header('countryslug') ?? 'in';;
 		$countcheck=Country::where('slug',$country_slug)->first();
 		if(!$countcheck){
 			$arr = array('status'=>1, 'data'=>[]);
@@ -766,7 +768,7 @@ class CueController extends Controller
     public function getalladmitadcampaigns(Request $request)
     {
     	  $countriedds=Country::first();
-       $country_slug= $request->header('countryslug');
+       $country_slug= $request->header('countryslug') ?? 'in';;
 		$countcheck=Country::where('slug',$country_slug)->first();
 		if(!$countcheck){
 			$arr = array('status'=>1, 'data'=>[]);
@@ -793,7 +795,7 @@ class CueController extends Controller
      public function seemoradmitadoffers(Request $request)
     {
     	  $countriedds=Country::first();
-       $country_slug= $request->header('countryslug');
+       $country_slug= $request->header('countryslug') ?? 'in';;
 		$countcheck=Country::where('slug',$country_slug)->first();
 		if(!$countcheck){
 			$arr = array('status'=>1, 'data'=>[]);
@@ -823,7 +825,7 @@ class CueController extends Controller
     public function admitadoffer_details(Request $request)
     {
     	  $countriedds=Country::first();
-       $country_slug= $request->header('countryslug');
+       $country_slug= $request->header('countryslug') ?? 'in';;
 		$countcheck=Country::where('slug',$country_slug)->first();
 		if(!$countcheck){
 			$arr = array('status'=>1, 'data'=>NULL);

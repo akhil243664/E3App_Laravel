@@ -20,7 +20,7 @@ class SearchController extends Controller
 	 public function trending(Request $request)
     {
          $countriedds=Country::first();
-      $country_slug= $request->header('countryslug');
+      $country_slug= $request->header('countryslug') ?? 'in';;
 		$countcheck=Country::where('slug',$country_slug)->first();
 		if(!$countcheck){
 			$arr = array('status'=>1, 'data'=>[]);

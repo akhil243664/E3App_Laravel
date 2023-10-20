@@ -40,7 +40,7 @@ class UserController extends Controller
     public function add_bank_detail(Request $request)
     {
     	$countriedds=Country::first();
-        $country_slug= $request->header('countryslug');
+        $country_slug= $request->header('countryslug') ?? 'in';;
 		$countcheck=Country::where('slug',$country_slug)->first();
 		if(!$countcheck){
 			$arr = array('status'=>1, 'data'=>NULL);
@@ -102,7 +102,7 @@ class UserController extends Controller
 	   public function add_upi_detail(Request $request)
     {
     	$countriedds=Country::first();
-$country_slug= $request->header('countryslug');
+$country_slug= $request->header('countryslug') ?? 'in';;
 		$countcheck=Country::where('slug',$country_slug)->first();
 		if(!$countcheck){
 			$arr = array('status'=>1, 'data'=>NULL);
@@ -144,7 +144,7 @@ $country_slug= $request->header('countryslug');
 	 public function add_paytm_detail(Request $request)
     {
     	$countriedds=Country::first();
-$country_slug= $request->header('countryslug');
+$country_slug= $request->header('countryslug') ?? 'in';;
 		$countcheck=Country::where('slug',$country_slug)->first();
 		if(!$countcheck){
 			$arr = array('status'=>1, 'data'=>NULL);
@@ -185,7 +185,7 @@ $country_slug= $request->header('countryslug');
 	 public function add_amazon_detail(Request $request)
     {
     	$countriedds=Country::first();
-$country_slug= $request->header('countryslug');
+$country_slug= $request->header('countryslug') ?? 'in';;
 		$countcheck=Country::where('slug',$country_slug)->first();
 		if(!$countcheck){
 			$arr = array('status'=>1, 'data'=>NULL);
@@ -225,7 +225,7 @@ $country_slug= $request->header('countryslug');
 	  public function get_bank_detail(Request $request)
     {
     	$countriedds=Country::first();
-$country_slug= $request->header('countryslug');
+$country_slug= $request->header('countryslug') ?? 'in';;
 		$countcheck=Country::where('slug',$country_slug)->first();
 		if(!$countcheck){
 			$arr = array('status'=>1, 'data'=>NULL);

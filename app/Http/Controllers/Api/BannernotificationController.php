@@ -21,7 +21,7 @@ class  BannernotificationController extends Controller
    public function bannernotification(Request $request)
     {
 	    $countriedds=Country::first();
-      $country_slug= $request->header('countryslug');
+      $country_slug= $request->header('countryslug') ?? 'in';;
 		$countcheck=Country::where('slug',$country_slug)->first();
 		if(!$countcheck){
 			$arr = array('status'=>1, 'data'=>NULL);
@@ -37,7 +37,7 @@ class  BannernotificationController extends Controller
 	 public static function get_settings($name)
     {
        $countriedds=Country::first();
-      $country_slug= $request->header('countryslug');
+      $country_slug= $request->header('countryslug') ?? 'in';;
 		$countcheck=Country::where('slug',$country_slug)->first();
 		if(!$countcheck){
 			$arr = array('status'=>1, 'data'=>NULL);

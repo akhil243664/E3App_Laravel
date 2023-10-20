@@ -26,7 +26,8 @@ class AdmobController extends Controller
    public function fbads(Request $request)
     {
     	$countriedds=Country::first();
-        $country_slug= $request->header('countryslug')??$countriedds->slug;
+		// $country_slug= $request->header('countryslug') ?? $countriedds->slug;
+        $country_slug= $request->header('countryslug') ?? 'in';
         $fbads=DB::table('fb_ads')->where('country_slug', $country_slug)->get();
 		$ad_net=array();
 		$ads=NULL;
@@ -61,7 +62,8 @@ class AdmobController extends Controller
     public function admobs(Request $request)
     {
     	$countriedds=Country::first();
-        $country_slug= $request->header('countryslug')??$countriedds->slug;
+        // $country_slug= $request->header('countryslug') ?? $countriedds->slug;
+        $country_slug= $request->header('countryslug') ?? 'in';
         $admo=DB::table('admob_ads')->where('country_slug', $country_slug)->get();
 		$ad_net=array();
 		$ads=NULL;

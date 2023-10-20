@@ -28,7 +28,7 @@ class ProductapiController extends Controller
     {
 
           $countriedds=Country::first();
-       $country_slug= $request->header('countryslug');
+       $country_slug= $request->header('countryslug') ?? 'in';;
 		$countcheck=Country::where('slug',$country_slug)->first();
 		if(!$countcheck){
 			$arr = array('status'=>1, 'data'=>[]);
@@ -48,7 +48,7 @@ class ProductapiController extends Controller
     public function getTrendingProducts(Request $request)
     {
          $countriedds=Country::first();
-      $country_slug= $request->header('countryslug');
+      $country_slug= $request->header('countryslug') ?? 'in';;
 		$countcheck=Country::where('slug',$country_slug)->first();
 		if(!$countcheck){
 			$arr = array('status'=>1, 'data'=>[]);

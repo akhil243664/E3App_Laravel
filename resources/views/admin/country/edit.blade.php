@@ -42,9 +42,10 @@
                 @csrf
                               <div class="form-group">
                                     <label id="folderLabel">Partner</label><br>
-                                    <input type="checkbox" name="admitad" @if($admitad->status==1) checked @endif> <span>Admited</span>        
-                                    <input type="checkbox" name="cuelink"  @if($cuelink->status==1) checked @endif>  <span>Cuelink</span>       
-                                    <input type="checkbox" name="impact" @if($impact->status==1) checked @endif><span>Impact</span>       
+                                    
+                                    <input type="checkbox" name="admitad" @if(isset($admitad) && $admitad->status == 1) checked @endif> <span>Admitted</span>
+                                    <input type="checkbox" name="cuelink" @if(isset($cuelink) && $cuelink->status == 1) checked @endif> <span>Cuelink</span>
+                                    <input type="checkbox" name="impact" @if(isset($impact) && $impact->status == 1) checked @endif> <span>Impact</span>
                                 </div>                                             
                                 <div class="form-group">
                                     @php($de_co=\App\Models\DefaultCountry::get())
@@ -70,7 +71,7 @@
                                                                    
                                 <div class="form-group">
                                 <label id="folderLabel">Slug</label>
-                                <input type="text" class="form-control no-space"  value="{{$country->slug}}" readonly disabled>        
+                                <input type="text" class="form-control no-space" name="slug"  value="{{$country->slug}}"  >        
                                 </div>                    
            
        
